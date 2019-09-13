@@ -21,14 +21,14 @@ RUN apt-get update -qq && apt-get install -y sqlite3 build-essential libpq-dev n
 # RUN chown docker:docker /home/docker
 # USER docker
 
-# Install Ruby Gems
+# # Install Ruby Gems
 RUN gem install bundler
 ENV BUNDLE_PATH /usr/local/bundle
-WORKDIR /sinaipoc
-COPY Gemfile /sinaipoc/Gemfile
-COPY Gemfile.lock /sinaipoc/Gemfile.lock
-RUN bundle install
+WORKDIR /app
+# COPY Gemfile /sinaipoc/Gemfile
+# COPY Gemfile.lock /sinaipoc/Gemfile.lock
+# RUN bundle install
 
-# Add sinaipoc
-COPY / /sinaipoc
-CMD ["sh", "/sinaipoc/docker/start-app.sh"]
+# # Add sinaipoc
+# COPY / /sinaipoc
+# CMD ["sh", "/sinaipoc/docker/start-app.sh"]

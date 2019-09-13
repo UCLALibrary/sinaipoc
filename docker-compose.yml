@@ -2,123 +2,25 @@ version: "3.6"
 
 services:
   web:
-    image: uclalibrary/californica:latest
-    depends_on:
-      - db
-      - fedora
-      - redis
-      - solr
-      - fedora_test
-      - solr_test
-    env_file:
-      - ./default.env # must come first to be overloaded
-      - ./docker.env # must come last to overload default
-    stdin_open: true
-    tty: true
+    build: .
     ports:
-      - "3000:3000"
+      - "3030:3000"
     volumes:
-      - .:/californica
-      - ./data:/opt/data
-      - derivatives:/opt/derivatives
-      - uploads:/opt/uploads
+      - .:/app
       - bundle_dir:/usr/local/bundle
-      - californica_tmp:/californica/tmp
-      - tmp:/tmp
-    working_dir: /californica
+    working_dir: /app
+    command: ["sh", "/app/docker/start-app.sh"]
 
-  sidekiq:
-    image: uclalibrary/californica:latest
-    command: ['bundle', 'exec', 'sidekiq']
-    depends_on:
-      - db
-      - fedora
-      - redis
-      - solr
-      - fedora_test
-      - solr_test
-    env_file:
-      - ./default.env # must come first to be overloaded
-      - ./docker.env # must come last to overload default
-    volumes:
-      - .:/californica
-      - ./data:/opt/data
-      - derivatives:/opt/derivatives
-      - uploads:/opt/uploads
-      - bundle_dir:/usr/local/bundle
-      - californica_tmp:/californica/tmp
-      - tmp:/tmp
-    working_dir: /californica
-
-  fedora:
-    image: nulib/fcrepo4:4.7.5
-    ports:
-      - "8984:8080"
-    volumes:
-      - fcrepo_data:/data
-    environment:
-      JAVA_OPTIONS: "-Xmx512m"
-
-  fedora_test:
-    image: nulib/fcrepo4:4.7.5
-    ports:
-      - "8986:8080"
-    environment:
-      JAVA_OPTIONS: "-Xmx512m"
-
-  db:
-    image: mysql:5.6
-    volumes:
-      - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      - ./docker/conf.d:/etc/mysql/conf.d
-      - mysql_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-
-  redis:
-    image: redis:4
-    volumes:
-      - redis_data:/data
-    ports:
-      - "6379:6379"
-
-  solr:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.solr
-    volumes:
-      - solr_data:/opt/solr/server/solr/mycores/californica/data
-    ports:
-      - "8983:8983"
-
-  solr_test:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.solr
-    ports:
-      - "8985:8983"
-
-  # iiif:
-  #   image: uclalibrary/cantaloupe
-  #   environment:
-  #     DELEGATE_SCRIPT.ENABLED: "true"
-  #     DELEGATE_SCRIPT.PATHNAME: /docker/delegates.rb
-  #     ENDPOINT.ADMIN.ENABLED: "true"
-  #     ENDPOINT.ADMIN.SECRET: cobweb123
-  #   ports:
-  #     - 8182:8182
+  # db:
+  #   image: mysql:5.6
   #   volumes:
-  #     - ./cantaloupe-delegate/lib:/delegate
+  #     - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+  #     - ./docker/conf.d:/etc/mysql/conf.d
+  #     - mysql_data:/var/lib/mysql
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
 
 volumes:
   bundle_dir:
-  derivatives:
-  fcrepo_data:
-  mysql_data:
-  redis_data:
-  solr_data:
-  tmp:
-  californica_tmp:
-  uploads:
