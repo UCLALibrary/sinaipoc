@@ -3,6 +3,9 @@ version: "3.6"
 services:
   web:
     build: .
+    environment:
+      SINAIID_UCLA_KEY: 'abc123'
+      SINAIID_URL: '/mock-sinai'
     ports:
       - "3030:3000"
     volumes:

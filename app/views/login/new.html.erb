@@ -1,3 +1,3 @@
 
-
-<button>Hi!</button>
+<%= @token %>
+<%= button_to 'Submit', ENV['SINAIID_URL'], params: {'ucla-key' => ENV['SINAIID_UCLA_KEY'], callback_url: 'google.com', token: @token}, method: :post  %>

@@ -1,5 +1,12 @@
+require 'securerandom'
+
 class LoginController < ApplicationController
   def new
-    # create new login token
+    @token = SecureRandom.uuid
+    @login = Login.create(token: @token)
+  end
+
+  def mock_sinai
+    puts params
   end
 end
