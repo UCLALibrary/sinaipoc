@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To run this app
 
-Things you may want to cover:
-
+#### Remove the Gemfile.lock
+$ `rm Gemfile.lock`
+#### Build the docker  
+$ `docker-compose build`
+#### Start the docker 
+$ `docker-compose up`
 * Ruby version
+#### Create the database
+$ `rails db:create`
+#### Migrate the database
+$ `rails db:migrate`
 
-* System dependencies
+#### Open in the browser
+http://localhost:3030/
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#### Close down the docker
+$ `docker-compose down`
