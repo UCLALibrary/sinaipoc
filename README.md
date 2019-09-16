@@ -2,7 +2,7 @@
 
 To run this app
 
-#### Remove the Gemfile.lock
+#### Remove the Gemfile.lock (if needed)
 $ `rm Gemfile.lock`
 #### Build the docker  
 $ `docker-compose build`
