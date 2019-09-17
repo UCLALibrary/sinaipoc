@@ -1,3 +1,9 @@
-
-<%= @token %>
-<%= button_to 'Submit', ENV['SINAIID_URL'], params: {'key' => ENV['SINAIID_UCLA_KEY'], callback_url: 'google.com', token: @token}, method: :post  %>
+<%= @token_success %>
+<br/>
+<br/>
+<% if flash[:error].present?%>
+  <div style="color:tomato">
+    <%= flash[:error].html_safe %>
+  </div>
+<% end %>
+<%= button_to 'Sinai Login', ENV['SINAIID_URL'], params: {'key' => ENV['SINAIID_UCLA_KEY'], callback_url: 'google.com', token: @token}, method: :post  %>

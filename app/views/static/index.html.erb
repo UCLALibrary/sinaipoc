@@ -1,0 +1,10 @@
+<h1>HOME PAGE</h1>
+
+<h2>Sinai IIIF Images</h2>
+<% if flash[:success].present?%>
+  <div style="color:green">
+    <%= flash[:success].html_safe %> 
+  </div>
+<% end %>
+
+<div style="width:400px;height:400px;background-color:grey"></div>
