@@ -6,6 +6,7 @@ services:
     environment:
       SINAIID_UCLA_KEY: 'abc123'
       SINAIID_URL: '/mock-sinai'
+      DOMAIN: 'localhost:3030'
     ports:
       - "3030:3000"
     volumes:

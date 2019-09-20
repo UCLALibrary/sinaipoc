@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   get '/login_response', to: 'login#login_response'
   post 'mock-sinai', to: 'login#mock_sinai'
   root 'static#index'
+  get '/cookie', to: 'static#cookie_test'
+  resources 'darrow'
 end
