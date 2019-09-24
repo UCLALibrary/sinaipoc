@@ -1,9 +1,12 @@
-<%= @token_success %>
-<br/>
+<h3 class='created'><small>@token_success: </small> <%= @token_success %> </h3>
+<h2>Full Path:  <%= @full_path %></h2>
 <br/>
 <% if flash[:error].present?%>
   <div style="color:tomato">
     <%= flash[:error].html_safe %>
   </div>
 <% end %>
-<%= button_to 'Sinai Login', ENV['SINAIID_URL'], params: {'key' => ENV['SINAIID_UCLA_KEY'], callback_url: 'google.com', token: @token}, method: :post  %>
+
+<%= @path_check %>
+<p>To access the images, please register for an account by clicking the Login button below.</p>
+<%= button_to 'Send Token to EMEL for Sinai Login', ENV['SINAIID_URL'], params: {'key' => ENV['SINAIID_UCLA_KEY'], callback_url: "#{@full_path}", token: @token}, method: :post, class:'button'  %>
