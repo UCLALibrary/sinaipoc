@@ -47,4 +47,4 @@ append :linked_files, "config/secrets.yml"
 # Default branch is :master
 set :branch, ENV['REVISION'] || ENV['BRANCH'] || ENV['BRANCH_NAME'] || 'master'
 
-after "deploy:restart", "sidekiq:restart"
+# after "deploy:restart", "sidekiq:restart"
