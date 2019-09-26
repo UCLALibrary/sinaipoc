@@ -7,4 +7,4 @@ Rails.application.config.session_store :cookie_store, :key => '_rails-api_sessio
 # (create the session table with "rake db:sessions:create")
 # Rails.application.config.session_store :active_record_store
 
-:expire_after => 60.minutes
+expire_after: 60.minutes
