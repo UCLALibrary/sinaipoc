@@ -8,7 +8,7 @@ require "capistrano/deploy"
 # Use bundler to install gem requirements
 require 'capistrano/bundler'
 require 'capistrano/rails'
-require 'capistrano/sidekiq'
+# require 'capistrano/sidekiq'
 require 'capistrano/passenger'
 require "capistrano/scm/git"
 install_plugin Capistrano::SCM::Git
