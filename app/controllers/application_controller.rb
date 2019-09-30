@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
         set_cookie
         'has_token You have a valid cookie that is allowing you to browse the Sinai Digital Library.'
       else
-        redirect_to "/login?callback=#{request.fullpath}"
+        redirect_to "/login?callback=#{@original_url}"
       end
     end
   end
