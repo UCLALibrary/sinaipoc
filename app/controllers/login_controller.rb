@@ -7,6 +7,7 @@ class LoginController < ApplicationController
     @domain = request.domain
     @port = request.port
     @requested_path = params[:callback]
+    @original_url = request.original_url
     @full_path = "http://#{@domain}:#{@port}#{@requested_path}"
   end
 

@@ -1,5 +1,6 @@
 <h3 class='created'><small>@token_success: </small> <%= @token_success %> </h3>
 <h2>Full Path:  <%= @full_path %></h2>
+<h2>original_url(:  <%= @original_url %></h2>
 <br/>
 <% if flash[:error].present?%>
   <div style="color:tomato">
@@ -10,3 +11,5 @@
 <%= @path_check %>
 <p>To access the images, please register for an account by clicking the Login button below.</p>
 <%= button_to 'Send Token to EMEL for Sinai Login', ENV['SINAIID_URL'], params: {'key' => ENV['SINAIID_UCLA_KEY'], callback_url: "#{@full_path}", token: @token}, method: :post, class:'button'  %>
+
+<!-- https://api.rubyonrails.org/v6.0.0/classes/ActionController/ParamsWrapper.html -->
