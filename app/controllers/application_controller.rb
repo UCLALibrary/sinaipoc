@@ -1,3 +1,5 @@
+require 'openssl'
+
 class ApplicationController < ActionController::Base
   before_action :sinai_authenticated?
 
@@ -29,17 +31,33 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cookie
-
+    @encryptd_str = get_encrypted_string
     cookies[:sinai_authenticated] = {
-      value: true,
+      value: @cipher_text,
       expires: Time.now + 90.days,
       domain: ENV['DOMAIN']
     }
-    @cookie_created = 'Cookie created'
+    @cookie_created = @encryptd_str
   end
 
   def has_cookie?
     # Does user have the sinai cookie set to true?
     @has_cookie = cookies[:sinai_authenticated]
+  end
+
+  def get_encrypted_string
+    cipher = OpenSSL::Cipher::AES256.new :CBC
+    cipher.encrypt
+    @iv = ENV[CIPHER_INITIALIZATION_VECTOR]
+    cipher.key = ENV[CIPHER_KEY]
+    @cipher_text = cipher.update("Authenticated #{Date.today}") + cipher.final
+  end
+
+  def decrypt_string
+    decipher = OpenSSL::Cipher::AES256.new :CBC
+    decipher.decrypt
+    decipher.iv = ENV[CIPHER_INITIALIZATION_VECTOR]
+    decipher.key = ENV[CIPHER_KEY]
+    decipher.update(@cipher_text) + decipher.final # @cipher_text
   end
 end
