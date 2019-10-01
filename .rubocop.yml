@@ -7,6 +7,7 @@ AllCops:
     - 'db/**/*.rb'
     - 'vendor/**/*'
     - 'tmp/**/*'
+    - app/controllers/application_controller.rb
 
 # Controlling flow w/ guard clauses can be overly clever and makes code harder to read - ABW
 Style/GuardClause:
