@@ -33,3 +33,11 @@
 .DS_Store
 config/.DS_Store
 public/.DS_Store
+
+.env
+.env.development
+.env.production
+.env.test
+
+.DS_Store
+.vscode/

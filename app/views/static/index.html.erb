@@ -2,10 +2,7 @@
 
 <h3 class='created'><small>cookies[:sinai_authenticated].present?</small> <%= cookies[:sinai_authenticated].present? %> <br><small>@cookie_created:</small> <%= @cookie_created %></h3>
 
-<h2>Requested URL: <%= request.fullpath %></h2>
-<%# x = decrypt_string(@has_cookie) %>
-IV <%= @iv %>
-<h2>Decrypted string: <%#= x %></h2>
+<h2>URL: <%= request.original_url %></h2>
 
 <!--IIIF -->
 <div class="uv" data-locale="en-GB:English (GB),cy-GB:Cymraeg" data-config="/config.json"

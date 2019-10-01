@@ -7,8 +7,9 @@ services:
       SINAIID_UCLA_KEY: 'abc123'
       SINAIID_URL: '/mock-sinai'
       DOMAIN: 'localhost:3030'
-      CIPHER_INITIALIZATION_VECTOR: 's\xC2\xCD\xCC\xF3d\x96\x0E\x9F\x0F\xEA\xB9\x942V\xD7'
-      CIPHER_KEY: '6R1ln1jIwfw2kA3d8xLzaGApdUGYTBQN'
+    env_file:
+      - ./default.env
+      - ./docker.env
     ports:
       - "3030:3000"
     volumes:
