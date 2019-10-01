@@ -1,0 +1,13 @@
+inherit_gem:
+  bixby: bixby_default.yml
+
+AllCops:
+  TargetRubyVersion: 2.4
+  Exclude:
+    - 'db/**/*.rb'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+
+# Controlling flow w/ guard clauses can be overly clever and makes code harder to read - ABW
+Style/GuardClause:
+  Enabled: false

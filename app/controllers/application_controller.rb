@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'openssl'
 
 class ApplicationController < ActionController::Base
@@ -47,9 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_iv_cookie
-    cookies[:initialization_vector] = {
-      value: @iv
-    }
+    cookies[:initialization_vector] = { value: @iv }
   end
 
   def get_encrypted_string
@@ -57,15 +56,29 @@ class ApplicationController < ActionController::Base
     cipher = OpenSSL::Cipher::AES256.new :CBC
     cipher.encrypt
     @iv = cipher.random_iv
-    cipher.key = ENV[CIPHER_KEY] # OpenSSL::Random.random_bytes(32)
+    # cipher.key = OpenSSL::Random.random_bytes(32)
+    cipher.key = ENV['CIPHER_KEY'] 
     @cipher_text = cipher.update("Authenticated #{todays_date}") + cipher.final
   end
 
   # def decrypt_string
   #   decipher = OpenSSL::Cipher::AES256.new :CBC
   #   decipher.decrypt
-  #   decipher.iv = ENV[CIPHER_INITIALIZATION_VECTOR]
-  #   decipher.key = ENV[CIPHER_KEY]
+  #   decipher.iv = ENV['CIPHER_INITIALIZATION_VECTOR']
+  #   decipher.key = ENV['CIPHER_KEY']
   #   decipher.update(@cipher_text) + decipher.final # @cipher_text
   # end
 end
+
+# https://ruby-doc.org/stdlib-2.4.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#method-i-random_key
+# https://medium.com/@Bakku1505/playing-with-symmetric-encryption-algorithms-in-ruby-8652f105341e
+
+# Share with Kevin/Hardy
+ # def decrypt_string
+  #   decipher = OpenSSL::Cipher::AES256.new :CBC
+  #   decipher.decrypt
+  #   decipher.iv = ENV['CIPHER_INITIALIZATION_VECTOR']
+  #   decipher.key = ENV['CIPHER_KEY']
+  #   decipher.update(@cipher_text) + decipher.final # @cipher_text
+  # end
+  # CIPHER_KEY
