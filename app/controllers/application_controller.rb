@@ -22,7 +22,6 @@ class ApplicationController < ActionController::Base
         set_iv_cookie
         'has_token You have a valid cookie that is allowing you to browse the Sinai Digital Library.'
       else
-#       redirect_to "https://www.ucla.edu"
         redirect_to "/login?callback=#{request.original_url}"
       end
     end
