@@ -5,7 +5,7 @@ services:
     build: .
     environment:
       SINAIID_UCLA_KEY: 'abc123'
-      SINAIID_URL: '/mock-sinai'
+      SINAIID_URL: 'https://sinai-id.org/authorize'
       DOMAIN: 'localhost:3030'
     env_file:
       - ./default.env
