@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     
     # Checks to see if we are on the Login page and do nothing
     if request.fullpath.include?(login_path)
-      @path_check = '@path_check request.fullpath.include?(login_path)'
+      @path_check = request.fullpath.include?(login_path)
     else
       @popsicle = 'Popsicle'
       if has_cookie?
@@ -22,7 +22,8 @@ class ApplicationController < ActionController::Base
         set_iv_cookie
         'has_token You have a valid cookie that is allowing you to browse the Sinai Digital Library.'
       else
-        redirect_to "/login?callback=#{@original_url}"
+#       redirect_to "https://www.ucla.edu"
+        redirect_to "/login?callback=#{request.original_url}"
       end
     end
   end

@@ -6,7 +6,7 @@ class LoginController < ApplicationController
 
   def new
     @requested_path = params[:callback]
-    @original_url = request.original_url
+    #@original_url = request.original_url
   end
 
   def create_token
