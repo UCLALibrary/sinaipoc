@@ -48,7 +48,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_iv_cookie
-    cookies[:initialization_vector] = { value: @iv }
+    cookies[:initialization_vector] = {
+      value: @iv,
+      expires: Time.now + 90.days,
+      domain: ENV['DOMAIN']
+    }
   end
 
   def create_encrypted_string
