@@ -12,14 +12,12 @@ class ApplicationController < ActionController::Base
     if request.fullpath.include?(login_path)
       @path_check = request.fullpath.include?(login_path)
     else
-      @popsicle = 'Popsicle'
       if has_cookie?
         # do nothing
         'has_cookie You have a valid cookie that is allowing you to browse the Sinai Digital Library.'
       elsif has_token?
         # user has a token so we then need to set the cookie based on the fact that they have a token in the database
         set_cookie
-        set_iv_cookie
         'has_token You have a valid cookie that is allowing you to browse the Sinai Digital Library.'
       else
         redirect_to "/login?callback=#{request.original_url}"
@@ -33,13 +31,12 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cookie
-    @encryptd_str = create_encrypted_string
     cookies[:sinai_authenticated] = {
-      value: @cipher_text,
+      value: "authenticated",
       expires: Time.now + 90.days,
       domain: ENV['DOMAIN']
     }
-    @cookie_created = @encryptd_str
+    @cookie_created = "authenticated"
   end
 
   def has_cookie?
@@ -47,23 +44,6 @@ class ApplicationController < ActionController::Base
     @has_cookie = cookies[:sinai_authenticated]
   end
 
-  def set_iv_cookie
-    cookies[:initialization_vector] = {
-      value: @iv,
-      expires: Time.now + 90.days,
-      domain: ENV['DOMAIN']
-    }
-  end
-
-  def create_encrypted_string
-    todays_date = Time.zone.today
-    cipher = OpenSSL::Cipher::AES256.new :CBC
-    cipher.encrypt
-    @iv = cipher.random_iv
-    # cipher.key = OpenSSL::Random.random_bytes(32)
-    cipher.key = ENV['CIPHER_KEY']
-    @cipher_text = cipher.update("Authenticated #{todays_date}") + cipher.final
-  end
 end
 
 # Share with Kevin/Hardy
