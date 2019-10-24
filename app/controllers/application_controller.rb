@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
         'has_cookie You have a valid cookie that is allowing you to browse the Sinai Digital Library.'
       elsif has_token?
         # user has a token so we then need to set the cookie based on the fact that they have a token in the database
-        set_cookie
+        set_session_cookie
         'has_token You have a valid cookie that is allowing you to browse the Sinai Digital Library.'
       else
         redirect_to "/login?callback=#{request.original_url}"
@@ -30,18 +30,13 @@ class ApplicationController < ActionController::Base
     params[:token].present? && Login.find_by(token: params[:token])
   end
 
-  def set_cookie
-    cookies[:sinai_authenticated] = {
-      value: "authenticated",
-      expires: Time.now + 90.days,
-      domain: ENV['DOMAIN']
-    }
-    @cookie_created = "authenticated"
+  def set_session_cookie
+    session[:sinai_authenticated_test] = "authenticated"
   end
 
   def has_cookie?
     # Does user have the sinai cookie set to true?
-    @has_cookie = cookies[:sinai_authenticated]
+    @has_cookie = session[:sinai_authenticated_test]
   end
 
 end
