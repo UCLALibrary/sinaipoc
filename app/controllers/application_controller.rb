@@ -46,7 +46,9 @@ class ApplicationController < ActionController::Base
 
   def set_iv_cookie
     cookies[:initialization_vector] = { value: @iv }
-  end
+    expires: Time.now + 90.days,
+    domain: ENV['DOMAIN']
+end
 
   def has_cookie?
     # Does user have the sinai cookie set to true?
