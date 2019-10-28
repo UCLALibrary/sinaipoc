@@ -1,17 +1,38 @@
 <h2 class='home'>HOME PAGE</h2>
+<ul>
+<li>URL: <%= request.original_url %></li>
+<li>secret_key_base: <%= Rails.application.secret_key_base %></li>
+<li>encrypted_salt: <%= Rails.application.config.action_dispatch.encrypted_cookie_salt %></li>
+<li>encrypted_signed_salt: <%= Rails.application.config.action_dispatch.encrypted_signed_cookie_salt %></li>
+<li>signed_salt: <%= Rails.application.config.action_dispatch.signed_cookie_salt %></li>
+<li>IV: <%= cookies[:initialization_vector] %></li>
+<li class='created'>Session test content: <%= session[:sinai_authenticated_test] %></li>
+</ul>
 
-<h2>URL: <%= request.original_url %></h2>
-<br>
-<h2>secret_key_base: <%= Rails.application.secret_key_base %></h2>
-<br>
-<h2>encrypted_salt: <%= Rails.application.config.action_dispatch.encrypted_cookie_salt %></h2>
-<br>
-<h2>encrypted_signed_salt: <%= Rails.application.config.action_dispatch.encrypted_signed_cookie_salt %></h2>
-<br>
-<h2>signed_salt: <%= Rails.application.config.action_dispatch.signed_cookie_salt %></h2>
-<br>
-<h2>IV: <%= cookies[:initialization_vector] %></h2>
-<br>
-<h2 class='created'>Session test content: <%= session[:sinai_authenticated_test] %></h2>
-<br>
-<img src="https://test-iiif.library.ucla.edu/iiif/2/healthcheckimage/full/!200,200/0/default.jpg">
+<div id="mirador" style="width: 800px; height: 800px;  margin-top: 20px; position: relative;"></div>
+
+<script src="https://unpkg.com/mirador@3.0.0-alpha.16/dist/mirador.min.js"></script>
+<script type="text/javascript">
+     var miradorInstance = Mirador.viewer({
+       id: 'mirador',
+       windows: [{
+         manifestId: 'https://iiif.library.ucla.edu/ark%3A%2F21198%2Fzz000sk51d/manifest',
+         thumbnailNavigationPosition: 'far-bottom',
+       },
+       {
+         manifestId: 'https://iiif.library.ucla.edu/ark%3A%2F21198%2Fzz00090npk/manifest',
+       }],
+       manifests: {
+         "https://iiif.library.ucla.edu/ark%3A%2F21198%2Fzz00090nmj/manifest": { provider: "UCLA"},
+         "https://data.ucd.ie/api/img/manifests/ucdlib:33064": { provider: "Irish Architectural Archive"},
+         "https://wellcomelibrary.org/iiif/b18035723/manifest": { provider: "Wellcome Library"},
+         "https://demos.biblissima.fr/iiif/metadata/florus-dispersus/manifest.json": { provider: "Biblissima"},
+         "https://www.e-codices.unifr.ch/metadata/iiif/gau-Fragment/manifest.json": { provider: "e-codices - Virtual Manuscript Library of Switzerland"},
+         "https://wellcomelibrary.org/iiif/collection/b18031511": { provider: "Wellcome Library"},
+         "https://gallica.bnf.fr/iiif/ark:/12148/btv1b10022508f/manifest.json": { provider: "Bibliothèque nationale de France"},
+         "https://manifests.britishart.yale.edu/Osbornfa1": { provider: "Beinecke Rare Book and Manuscript Library, Yale University"},
+         "https://iiif.biblissima.fr/chateauroux/B360446201_MS0005/manifest.json": { provider: "Biblissima"},
+         "https://iiif.durham.ac.uk/manifests/trifle/32150/t1/m4/q7/t1m4q77fr328/manifest": { provider: "Durham University Library"}
+       }
+     });
+</script>

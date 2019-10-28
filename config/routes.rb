@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   root 'static#index'
   get '/cookie', to: 'static#cookie_test'
   resources 'darrow'
+
+  # mount MiradorRails::Engine, at: MiradorRails::Engine.locales_mount_path
 end
