@@ -65,6 +65,7 @@ end
     @iv = "abcdefghijklmnop"
     # cipher.key = OpenSSL::Random.random_bytes(32)
     cipher.key = ENV['CIPHER_KEY']
+    cipher.iv = @iv
     @cipher_text = cipher.update("Authenticated #{todays_date}") + cipher.final
   end
 end
