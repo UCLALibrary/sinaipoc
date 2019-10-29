@@ -63,10 +63,10 @@ end
     cipher.encrypt
     @iv = cipher.random_iv
     @iv = "abcdefghijklmnop"
-    # cipher.key = OpenSSL::Random.random_bytes(32)
     cipher.key = ENV['CIPHER_KEY']
     cipher.iv = @iv
     @cipher_text = cipher.update("Authenticated #{todays_date}") + cipher.final
+    @cipher_text = @cipher_text.unpack('H*')[0].upcase
   end
 end
 
