@@ -62,7 +62,6 @@ end
     cipher = OpenSSL::Cipher::AES256.new :CBC
     cipher.encrypt
     @iv = cipher.random_iv
-    @iv = "abcdefghijklmnop"
     cipher.key = ENV['CIPHER_KEY']
     cipher.iv = @iv
     @cipher_text = cipher.update("Authenticated #{todays_date}") + cipher.final
