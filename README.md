@@ -4,6 +4,10 @@ To run this app
 
 #### Remove the Gemfile.lock (if needed)
 $ `rm Gemfile.lock`
+#### Set the domain for localhost in docker-compose.yml
+$ `DOMAIN: 'localhost'`
+#### create default.env to hold your encryption key
+$ `CIPHER_KEY=ThisPasswordIsReallyHardToGuess!`
 #### Build the docker  
 $ `docker-compose build`
 #### Start the docker 
