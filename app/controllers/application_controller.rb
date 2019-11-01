@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
         'has_cookie You have a valid cookie that is allowing you to browse the Sinai Digital Library.'
       elsif has_token?
         # user has a token so we then need to set the cookie based on the fact that they have a token in the database
-        set_session_cookie
         set_auth_cookie
         set_iv_cookie
         'has_token You have a valid cookie that is allowing you to browse the Sinai Digital Library.'
@@ -24,6 +23,11 @@ class ApplicationController < ActionController::Base
         redirect_to "/login?callback=#{request.original_url}"
       end
     end
+  end
+
+  def has_cookie?
+    # Does user have the sinai cookie?
+    @has_cookie = cookies[:sinai_authenticated]
   end
 
   def has_token?
@@ -38,23 +42,19 @@ class ApplicationController < ActionController::Base
   def set_auth_cookie
     @encryptd_str = create_encrypted_string
     cookies[:sinai_authenticated] = {
-      value: @cipher_text,
+      value: @cipher_text_unPacked,
       expires: Time.now + 90.days,
       domain: ENV['DOMAIN']
     }
   end
 
   def set_iv_cookie
+    @iv_unPacked = @iv.unpack('H*')[0].upcase
     cookies[:initialization_vector] = {
-    value: @iv,
-    expires: Time.now + 90.days,
-    domain: ENV['DOMAIN']
-  }
-end
-
-  def has_cookie?
-    # Does user have the sinai cookie set to true?
-    @has_cookie = session[:sinai_authenticated_test]
+      value: @iv_unPacked,
+      expires: Time.now + 90.days,
+      domain: ENV['DOMAIN']
+    }
   end
 
   def create_encrypted_string
@@ -62,24 +62,9 @@ end
     cipher = OpenSSL::Cipher::AES256.new :CBC
     cipher.encrypt
     @iv = cipher.random_iv
-    @iv = "abcdefghijklmnop"
     cipher.key = ENV['CIPHER_KEY']
     cipher.iv = @iv
-    @cipher_text = cipher.update("Authenticated #{todays_date}") + cipher.final
-    @cipher_text = @cipher_text.unpack('H*')[0].upcase
+    @cipher_text_packed = cipher.update("Authenticated #{todays_date}") + cipher.final
+    @cipher_text_unPacked = @cipher_text_packed.unpack('H*')[0].upcase
   end
 end
-
-# Share with Kevin/Hardy
-
-# https://ruby-doc.org/stdlib-2.4.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#method-i-random_key
-# https://medium.com/@Bakku1505/playing-with-symmetric-encryption-algorithms-in-ruby-8652f105341e
-
-# def decrypt_string
-#   decipher = OpenSSL::Cipher::AES256.new :CBC
-#   decipher.decrypt
-#   decipher.iv = ENV['CIPHER_INITIALIZATION_VECTOR']
-#   decipher.key = ENV['CIPHER_KEY']
-#   decipher.update(@cipher_text) + decipher.final # @cipher_text
-# end
-# CIPHER_KEY

@@ -5,8 +5,8 @@
 <li>encrypted_salt: <%= Rails.application.config.action_dispatch.encrypted_cookie_salt %></li>
 <li>encrypted_signed_salt: <%= Rails.application.config.action_dispatch.encrypted_signed_cookie_salt %></li>
 <li>signed_salt: <%= Rails.application.config.action_dispatch.signed_cookie_salt %></li>
-<li>IV: <%= cookies[:initialization_vector] %></li>
-<li class='created'>Session test content: <%= session[:sinai_authenticated_test] %></li>
+<li>IV: <!-- %= cookies[:initialization_vector] % --></li>
+<li class='created'>Session test content: <!-- %= cookies[:sinai_authenticated] % --></li>
 </ul>
 
 <div id="mirador" style="width: 800px; height: 800px;  margin-top: 20px; position: relative;"></div>
