@@ -1,7 +1,0 @@
-{
-  "name": "sinaipoc",
-  "private": true,
-  "dependencies": {
-    "mirador": "^3.0.0-alpha.16"
-  }
-}
