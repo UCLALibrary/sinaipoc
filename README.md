@@ -8,15 +8,13 @@ $ `rm Gemfile.lock`
 $ `DOMAIN: 'localhost'`
 #### create default.env to hold your encryption key
 $ `CIPHER_KEY=ThisPasswordIsReallyHardToGuess!`
-#### Build the docker  
-$ `docker-compose build`
 #### Start the docker 
 $ `docker-compose up`
 * Ruby version
 #### Create the database
-$ `rails db:create`
+$ `docker-compose exec web bundle exec rails db:create`
 #### Migrate the database
-$ `rails db:migrate`
+$ `docker-compose exec web bundle exec rails db:migrate`
 
 #### Open in the browser
 http://localhost:3030/
